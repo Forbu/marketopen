@@ -117,11 +117,11 @@ contract dmarket {
   return "success" ;
 }
 
-function public get_item(address adress_){
+function get_item(address adress_) public{
   return seller[adress_];
 }
 
-function public get_product(uint8 id,address seller_to){
+function get_product (uint8 id,address seller_to){
   for(uint i=0;i<products[seller_to].length;i++){
     if(products[seller_to][i] == id){
       return products[seller_to][i];
