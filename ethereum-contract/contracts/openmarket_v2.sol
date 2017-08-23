@@ -1,6 +1,6 @@
 pragma solidity ^0.4.11;
 
-contract dmarket {
+contract openmarket_v2 {
 
   struct product {
         string name; // Name of the product
@@ -76,7 +76,7 @@ contract dmarket {
       // TODO later
   }
 
-  function publish_product_tomarket(address seller_to,string name_, string description_,uint8 price_, string image_adress_,uint256 id_){
+  function publish_product_tomarket(string name_, string description_,uint8 price_, string image_adress_){
         // Create the modifier for the seller
         // create pruduct
         // Adding the product for the seller

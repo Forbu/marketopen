@@ -1,6 +1,6 @@
 var ConvertLib = artifacts.require("./ConvertLib.sol");
 var MetaCoin = artifacts.require("./MetaCoin.sol");
-var Dmarket = artifacts.require("./dmarket.sol");
+var Dmarket = artifacts.require("./openmarket_v2.sol");
 var event_test = artifacts.require("./eventc.sol");
 
 module.exports = function(deployer) {
