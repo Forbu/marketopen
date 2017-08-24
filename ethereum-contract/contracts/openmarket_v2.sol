@@ -82,7 +82,7 @@ contract openmarket_v2 {
         // Adding the product for the seller
         var product_tosell = product({name: name_, description: description_,   price: price_, image_adress: image_adress_,seller: msg.sender,exist: true});
         products[id_tot] = product_tosell;
-        this.id_tot += 1;
+        id_tot += 1;
         // broadcast product to the blockchain
         publish_product(id_tot);
   }
