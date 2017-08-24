@@ -35,8 +35,18 @@ module.exports = {
 
   },
 
-  buy_product: function (){
-
+  buy_product: function (product_id,value_){
+    var transaction = "";
+    console.log("publishing product")
+    contract.methods.buy_product(id_).send({from: address_seller,value: value_,gas: gas_,
+          gasPrice: 15000000}, function(error, transactionHash){
+            if(error){
+              console.log(error);
+            }else{
+              console.log("Transaction hash :");
+              console.log(transactionHash);
+              }
+    });
   },
 
   register_seller: function (name,description,email,address_seller,gas_){

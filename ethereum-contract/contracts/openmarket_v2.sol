@@ -118,4 +118,10 @@ contract openmarket_v2 {
     }
   }
 
+  function get_seller_caract(address seller_) public return(seller){
+
+  }
+
+
+
 }
