@@ -8,7 +8,9 @@ The project is currently under developpment.
 ### ROADMAP
 
 -> Smart Contract code testing finishing 23 August 2017
+
 -> Backend Javascript should take 1 week => finishing ~01 september
+
 -> Frontend should take 1/2 weeks -> 14 september
 
 Then they should be a lot of documentation coming.
