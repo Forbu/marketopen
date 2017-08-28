@@ -10,24 +10,24 @@ module.exports = {
     return web3;
   },
 
-  get_productsAll :function (date_begin,date_end){
+  get_productsAll :function (){
       // TODO
       /*
       Function to collect all the products selled on the market
       */
-      var result = contract_event.getPastEvents('publish_product',{
+      var result = this.contract.getPastEvents('publish_product',{
           fromBlock: 0,
           toBlock: 'latest'
       });
       result.then(console.log, console.error);
   },
 
-  get_sellers: function (date_begin,date_end){
+  get_sellers: function (){
     // TODO
     /*
     Function to collect all the sellers of the marketplace
     */
-    var result = contract_event.getPastEvents('seller_sub',{
+    var result = this.contract.getPastEvents('seller_sub',{
         fromBlock: 0,
         toBlock: 'latest'
     });
@@ -38,7 +38,7 @@ module.exports = {
   buy_product: function (product_id,value_){
     var transaction = "";
     console.log("publishing product")
-    contract.methods.buy_product(id_).send({from: address_seller,value: value_,gas: gas_,
+    this.contract.methods.buy_product(id_).send({from: address_seller,value: value_,gas: gas_,
           gasPrice: 15000000}, function(error, transactionHash){
             if(error){
               console.log(error);
@@ -52,7 +52,7 @@ module.exports = {
   register_seller: function (name,description,email,address_seller,gas_){
     var transaction = "";
     console.log("publishing product")
-    contract.methods.register_seller(name,description,email).send({from: address_seller,gas: gas_,
+    this.contract.methods.register_seller(name,description,email).send({from: address_seller,gas: gas_,
           gasPrice: 15000000}, function(error, transactionHash){
             if(error){
               console.log(error);
@@ -66,7 +66,7 @@ module.exports = {
   note_seller: function (address_tonote,mark,comment,address_seller,gas_){
     var transaction = "";
     console.log("publishing product")
-    contract.methods.note_adress(address_tonote,mark,comment).send({from: address_seller,gas: gas_,
+    this.contract.methods.note_adress(address_tonote,mark,comment).send({from: address_seller,gas: gas_,
           gasPrice: 15000000}, function(error, transactionHash){
             if(error){
               console.log(error);
@@ -80,8 +80,8 @@ module.exports = {
   publish_product: function(name,description,price,image_adress,address_from,gas_){
     var transaction = "";
     console.log("publishing product")
-    contract.methods.publish_product_tomarket(name,description,price,image_adress).send({from: address_from,gas: gas_,
-          gasPrice: 15000000}, function(error, transactionHash){
+    this.contract.methods.publish_product_tomarket(name,description,price,image_adress).send({from: address_from,gas: gas_,
+          gasPrice: 10000000}, function(error, transactionHash){
             if(error){
               console.log(error);
             }else{
@@ -91,7 +91,11 @@ module.exports = {
     });
 
   },
-
+  set_contract: function(web3,address,abi){
+    this.contract = new web3.eth.Contract(abi,address);
+  },
+  contract: null
+,
   abi_test : [
     {
       "constant": false,
@@ -273,7 +277,7 @@ module.exports = {
   ],
 
   // to change a lot
-  address_contract : "0x4c1ddb5a371813ef9382c7f7e5add035a13c115e"
+  address_contract : "0x0b72e4de25c88b59d2e0948fb65a90b09da4076e"
 
 
 };

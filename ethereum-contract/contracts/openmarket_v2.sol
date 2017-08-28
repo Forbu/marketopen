@@ -28,10 +28,10 @@ contract openmarket_v2 {
   }
 
   // Current data about the user
-  mapping (address => seller) sellers;
-  mapping (address => buyer) buyers;
-  mapping (uint256 => product) products;
-  uint256 id_tot;
+  mapping (address => seller) public sellers;
+  mapping (address => buyer) public buyers;
+  mapping (uint256 => product) public products;
+  uint256 public id_tot;
 
   // List of even (interesting stuff here)
   event seller_sub(
@@ -117,11 +117,6 @@ contract openmarket_v2 {
         }
     }
   }
-
-  function get_seller_caract(address seller_) public return(seller){
-
-  }
-
 
 
 }
