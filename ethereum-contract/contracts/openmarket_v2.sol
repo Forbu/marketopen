@@ -35,11 +35,11 @@ contract openmarket_v2 {
 
   // List of even (interesting stuff here)
   event seller_sub(
-    address seller
+    address seller_
     );
 
   event buyer_sub(
-    address buyer
+    address buyer_
     );
 
   event publish_product(
@@ -47,7 +47,7 @@ contract openmarket_v2 {
     );
 
   event buyed_product(
-    address buyer,
+    address buyer_,
     uint256 id
     );
 
@@ -56,6 +56,7 @@ contract openmarket_v2 {
     // nothing to do
     id_tot = 0;
 	}
+
 
   function register_seller(string name,
       string description,
@@ -118,5 +119,43 @@ contract openmarket_v2 {
     }
   }
 
+  // the getter function
+
+  function getSeller(address addressTO) public returns(string name_,string description_,uint mark_,uint Size_,string email_) {
+    name_ = sellers[addressTO].name;
+    description_ = sellers[addressTO].description;
+    mark_ = sellers[addressTO].mark;
+    Size_ = sellers[addressTO].Size;
+    email_ = sellers[addressTO].email;
+  }
+
+
+
+
+  function getBuyer(address address__) public returns(string name,
+          uint8 mark,
+          address[] adress_to_mark,
+          string email){
+    // TODO
+    name = buyers[address__].name;
+    mark = buyers[address__].mark;
+    adress_to_mark = buyers[address__].adress_to_mark;
+    email = buyers[address__].email;
+
+  }
+
+  function getProduct(uint256 id__) public returns(string name,
+          string description,
+          uint8 price,
+          string image_adress,
+          address seller_,
+          bool exist){
+            name = products[id__].name;
+            description = products[id__].description;
+            price = products[id__].price;
+            image_adress = products[id__].image_adress;
+            seller_ = products[id__].seller;
+            exist = products[id__].exist;
+  }
 
 }

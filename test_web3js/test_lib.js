@@ -34,5 +34,5 @@ seller = {
 //myModule.get_sellers();
 
 // Now we try to get the carac of our stuff
-var getter_testing = myModule.contract.methods.id_tot();
+var getter_testing = myModule.contract.methods.id_tot.call(0);
 getter_testing.then(console.log, console.error)
