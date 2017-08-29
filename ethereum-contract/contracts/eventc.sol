@@ -4,7 +4,7 @@ contract eventc {
 event Top(string yolo);
 
 function eventc(){
-  this.public_bar = 0;
+  public_bar = 0;
 }
 
 function event_testing(string test){

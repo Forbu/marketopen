@@ -1,4 +1,5 @@
 var Web3 = require("web3");
+
 module.exports = {
   init_web3: function (url){
     if (typeof web3 !== 'undefined') {
@@ -215,9 +216,222 @@ module.exports = {
     },
     {
       "constant": false,
+      "inputs": [
+        {
+          "name": "address__",
+          "type": "address"
+        }
+      ],
+      "name": "getBuyer",
+      "outputs": [
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "mark",
+          "type": "uint8"
+        },
+        {
+          "name": "adress_to_mark",
+          "type": "address[]"
+        },
+        {
+          "name": "email",
+          "type": "string"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "name": "sellers",
+      "outputs": [
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "name": "mark",
+          "type": "uint256"
+        },
+        {
+          "name": "Size",
+          "type": "uint256"
+        },
+        {
+          "name": "email",
+          "type": "string"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "products",
+      "outputs": [
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "name": "price",
+          "type": "uint8"
+        },
+        {
+          "name": "image_adress",
+          "type": "string"
+        },
+        {
+          "name": "seller",
+          "type": "address"
+        },
+        {
+          "name": "exist",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": false,
       "inputs": [],
       "name": "register_buyer",
       "outputs": [],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "name": "buyers",
+      "outputs": [
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "mark",
+          "type": "uint8"
+        },
+        {
+          "name": "email",
+          "type": "string"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "id_tot",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "addressTO",
+          "type": "address"
+        }
+      ],
+      "name": "getSeller",
+      "outputs": [
+        {
+          "name": "name_",
+          "type": "string"
+        },
+        {
+          "name": "description_",
+          "type": "string"
+        },
+        {
+          "name": "mark_",
+          "type": "uint256"
+        },
+        {
+          "name": "Size_",
+          "type": "uint256"
+        },
+        {
+          "name": "email_",
+          "type": "string"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "id__",
+          "type": "uint256"
+        }
+      ],
+      "name": "getProduct",
+      "outputs": [
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "name": "price",
+          "type": "uint8"
+        },
+        {
+          "name": "image_adress",
+          "type": "string"
+        },
+        {
+          "name": "seller_",
+          "type": "address"
+        },
+        {
+          "name": "exist",
+          "type": "bool"
+        }
+      ],
       "payable": false,
       "type": "function"
     },
@@ -226,7 +440,7 @@ module.exports = {
       "inputs": [
         {
           "indexed": false,
-          "name": "seller",
+          "name": "seller_",
           "type": "address"
         }
       ],
@@ -238,7 +452,7 @@ module.exports = {
       "inputs": [
         {
           "indexed": false,
-          "name": "buyer",
+          "name": "buyer_",
           "type": "address"
         }
       ],
@@ -262,7 +476,7 @@ module.exports = {
       "inputs": [
         {
           "indexed": false,
-          "name": "buyer",
+          "name": "buyer_",
           "type": "address"
         },
         {
@@ -277,7 +491,7 @@ module.exports = {
   ],
 
   // to change a lot
-  address_contract : "0x0b72e4de25c88b59d2e0948fb65a90b09da4076e"
+  address_contract : "0xf3efecd8018f2053bb6252e8df15c60e04976cee"
 
 
 };
