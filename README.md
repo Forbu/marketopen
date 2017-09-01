@@ -1,5 +1,5 @@
-# marketopen : first decentrelize market
-no fee, no pub, no center and open-source.
+# marketopen : the free decentrelize market
+no fee, no pub, no owner and totally open-source.
 
 Marketopen is open-source / free market plateform based on the ethereum blockchain platform.
 
