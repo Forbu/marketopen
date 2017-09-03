@@ -1,0 +1,6 @@
+extends layout
+
+block content
+  ul
+    each val in products_all
+      li= val['returnValues']['id_']

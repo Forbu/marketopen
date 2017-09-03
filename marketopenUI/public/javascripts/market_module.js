@@ -20,7 +20,7 @@ module.exports = {
           fromBlock: 0,
           toBlock: 'latest'
       });
-      result.then(console.log, console.error);
+      return result;
   },
 
   get_sellers: function (){

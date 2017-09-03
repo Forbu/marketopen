@@ -605,8 +605,68 @@
       "links": {},
       "address": "0xf3efecd8018f2053bb6252e8df15c60e04976cee",
       "updated_at": 1504024990560
+    },
+    "1504344331333": {
+      "events": {
+        "0xe17a7acebe852248b5b196fb17e6c8f4dcdb492ea483fc4a82861d7bf093eca0": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "seller_",
+              "type": "address"
+            }
+          ],
+          "name": "seller_sub",
+          "type": "event"
+        },
+        "0x5cd1ea7e8958541cf0ba4855adff1a64658002ee747b841b2bce4ea67a196d35": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "buyer_",
+              "type": "address"
+            }
+          ],
+          "name": "buyer_sub",
+          "type": "event"
+        },
+        "0x7950b2cdd46290b5b940f604e13f1a1709aa3afe4a7f559089a4483f478dd8ed": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "id_",
+              "type": "uint256"
+            }
+          ],
+          "name": "publish_product",
+          "type": "event"
+        },
+        "0x4882b19d4b1986e2de43923a11eef72e39f0fe1c2c0c227be77e7110b05ebfb8": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "buyer_",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "id",
+              "type": "uint256"
+            }
+          ],
+          "name": "buyed_product",
+          "type": "event"
+        }
+      },
+      "links": {},
+      "address": "0x49ffd640738c1919d6f8a4ac17f22566d5cd74ab",
+      "updated_at": 1504344349351
     }
   },
   "schema_version": "0.0.5",
-  "updated_at": 1504024990560
+  "updated_at": 1504344349351
 }

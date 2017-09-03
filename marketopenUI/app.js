@@ -10,6 +10,15 @@ var users = require('./routes/users');
 
 var app = express();
 
+// openmarket API
+const openmarket_module = require('./public/javascripts/market_module');
+var url = "http://localhost:8545";
+var web3 = openmarket_module.init_web3(url);
+
+// now we can try to call some functions
+openmarket_module.set_contract(web3,openmarket_module.address_contract,openmarket_module.abi);
+
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
@@ -22,8 +31,60 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', index);
-app.use('/users', users);
+app.get('/',function(req, res){
+   var products = openmarket_module.get_productsAll();
+   products.then(function(result){
+     console.log(result);
+     res.render('products', {products_all: result});
+   });
+
+});
+
+// Part where we see all the product
+app.get('/product',function(req, res){
+  var product_id = req.param('id');
+  console.log(product_id);
+  // make the request for the product in question
+  openmarket_module.contract.methods.getProduct(product_id).call().then(
+    function(result){
+    // We look for the carac of the seller too
+    console.log(result);
+    res.render('product', {product: result});
+  });
+});
+
+// Part where we see all the sellers
+app.post('/seller',function(req, res){
+  var address = req.body.address;
+
+  // make the request for the stuff about the seller
+  openmarket_module.contract.methods.getSeller(address).call().then(
+    function(result){
+    // We look for the carac of the seller too
+    console.log(result);
+    res.render('seller', {seller: result});
+  });
+
+});
+
+// Part where we see all the buyers
+app.post('/buyer',function(req, res){
+  var address = req.body.address;
+  // make the the request to see the buyer
+  openmarket_module.contract.methods.getBuyer(address).call().then(
+    function(result){
+    // We look for the carac of the seller too
+    console.log(result);
+    res.render('buyer', {buyer: result});
+  });
+});
+
+
+
+app.post('/products_search',function(req, res){
+
+
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -42,33 +103,6 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-
-// Part where we see all the product
-app.post('/product',function(req, res){
-  var product = req.body.id;
-
-  // make the request for the product in question
-
-
-});
-
-// Part where we see all the sellers
-app.post('/seller',function(req, res){
-  var address = req.body.address;
-
-  // make the request for the stuff about the seller
-
-
-});
-
-// Part where we see all the buyers
-app.post('/buyer',function(req, res){
-  var address = req.body.address;
-
-  // make the the request to see the buyer
-
-});
-
 
 
 module.exports = app;
