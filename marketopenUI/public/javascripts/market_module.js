@@ -11,25 +11,27 @@ module.exports = {
     return web3;
   },
 
-  get_productsAll :function (){
+
+  get_productsFrom :function (blockId){
       // TODO
       /*
       Function to collect all the products selled on the market
       */
       var result = this.contract.getPastEvents('publish_product',{
-          fromBlock: 0,
+          fromBlock: blockId,
           toBlock: 'latest'
       });
       return result;
   },
 
-  get_sellers: function (){
+
+  get_sellersFrom: function (blockId){
     // TODO
     /*
     Function to collect all the sellers of the marketplace
     */
     var result = this.contract.getPastEvents('seller_sub',{
-        fromBlock: 0,
+        fromBlock: blockId,
         toBlock: 'latest'
     });
     result.then(console.log, console.error);

@@ -8,6 +8,11 @@ var bodyParser = require('body-parser');
 var index = require('./routes/index');
 var users = require('./routes/users');
 
+// mongodb stuff TODO later
+var http = require('http');
+var MongoClient = require('mongodb').MongoClient;
+var url = "mongodb://localhost:27017/mydb";
+
 var app = express();
 
 // openmarket API
@@ -31,57 +36,138 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/',function(req, res){
-   var products = openmarket_module.get_productsAll();
-   products.then(function(result){
-     console.log(result);
-     res.render('products', {products_all: result});
-   });
+app.get('/init',function(req, res){
+  // init the database
+  MongoClient.connect(url, function(err, db) {
+  if (err) throw err;
+  db.collectionNames(function(err,result){
+    for(i = 0;i< result.length;i++){
+      if(result[i] == 'products'|| result[i] == 'sellers'){
+        res.send("initialisation already done");
+        return null;
+      }
+    }
 
+    db.createCollection("sellers", function(err, collection){
+      var sellers = openmarket_module.get_sellersFrom(0);
+      sellers.then(function(result){
+        console.log(result);
+        // add to the mongodb database
+        for(i=0:i<sellers.length:i++){
+          // request on db
+          openmarket_module.contract.methods.getSeller(result[i]['address']).call().then(
+              function(result){
+              // We look for the carac of the seller too
+              console.log(result);
+              collection.insert(result);
+            });
+        }
+        res.send("finishing inserting sellers");
+      });
+    });
+
+    db.createCollection("products", function(err, collection){
+      var products = openmarket_module.get_productsFrom(0);
+      products.then(function(result){
+        console.log(result);
+        // add to the mongodb database
+        for(i=0:i<products.length:i++){
+          // request on db
+          // query HERE TODO
+          openmarket_module.contract.methods.getProduct(result[i]['id_']).call().then(
+              function(result){
+              // We look for the carac of the seller too
+              console.log(result);
+              collection.insert(result);
+            });
+        }
+        res.send("finishing inserting products");
+      });
+    });
+
+  });
+  });
 });
 
-// Part where we see all the product
-app.get('/product',function(req, res){
-  var product_id = req.param('id');
-  console.log(product_id);
-  // make the request for the product in question
-  openmarket_module.contract.methods.getProduct(product_id).call().then(
-    function(result){
-    // We look for the carac of the seller too
-    console.log(result);
-    res.render('product', {product: result});
+app.get('/cleanAll',function(req, res){
+  // clean all the data from the database
+  // clean operation on the mongodb database (remove old data)
+  var blockId = req.param('blockid');
+  MongoClient.connect(url, function(err, db) {
+  if (err) throw err;
+    db.collection('sellers',function(err, collection){
+      collection.remove({},function(err, removed){
+      });
+    });
+    db.collection('products',function(err, collection){
+      collection.remove({},function(err, removed){
+      });
+    });
   });
+  res.send("clear all");
+});
+
+app.get('/clean',function(req, res){
+  // clean all the data from the database
+  // clean operation on the mongodb database (remove old data)
+  var blockId = req.param('blockid');
+  MongoClient.connect(url, function(err, db) {
+    if (err) throw err;
+  });
+  res.send("clean partial");
+});
+
+app.get('/actualize',function(req, res){
+  // actualize the database
+  // get the last block to actualize -> actualize to this block
+  // and register the data to mongodb database
+
+  // get the id of the last actualization
+  // then actualise from here
 });
 
 // Part where we see all the sellers
-app.post('/seller',function(req, res){
-  var address = req.body.address;
+app.get('/seller',function(req, res){
+  var address__ = req.param('address');
 
-  // make the request for the stuff about the seller
-  openmarket_module.contract.methods.getSeller(address).call().then(
-    function(result){
-    // We look for the carac of the seller too
-    console.log(result);
-    res.render('seller', {seller: result});
+  // just call the database
+  MongoClient.connect(url, function(err, db) {
+  if (err) throw err;
+  var query = { address: address__};
+  db.collection("seller").find(query).toArray(function(err, result) {
+    if (err) throw err;
+    res.json(result);
+    db.close();
   });
+});
 
 });
 
 // Part where we see all the buyers
-app.post('/buyer',function(req, res){
-  var address = req.body.address;
+app.get('/buyer',function(req, res){
+  var address__ = req.param('address');
   // make the the request to see the buyer
-  openmarket_module.contract.methods.getBuyer(address).call().then(
-    function(result){
-    // We look for the carac of the seller too
-    console.log(result);
-    res.render('buyer', {buyer: result});
+  MongoClient.connect(url, function(err, db) {
+  if (err) throw err;
+  var query = { address: address__ };
+  db.collection("buyer").find(query).toArray(function(err, result) {
+    if (err) throw err;
+    res.json(result);
+    db.close();
   });
 });
+});
 
+app.get('/products_search',function(req, res){
+  // use mongodb database as search engine
+  var address = req.param('keyword');
+});
 
+app.get('/buy',function(req, res){
+  // buy operation
+  var price = req.param('price');
+  var id_product = req.param('id_product');
 
-app.post('/products_search',function(req, res){
 
 
 });
