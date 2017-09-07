@@ -1,0 +1,15 @@
+<div *ngIf="product">
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h3 class="panel-title">{{product.name}}</h3>
+    </div>
+    <div class="panel-body">
+      <h5> Description : <small>{{product.description}}</small></h5>
+      <h5> Price : <small>{{product.price}}</small></h5>
+      <h5> Image URL : <small>{{product.image_adress}}</small></h5>
+      <h5> Seller description : <small>{{product.seller_info.description}}</small></h5>
+      <h5> Seller size : <small>{{product.seller_info.Size}}</small></h5>
+      <h5> Seller mark : <small>{{product.seller_info.mark}}</small></h5>
+    </div>
+  </div>
+</div>

@@ -11,6 +11,8 @@ import{ProductsService} from './products.service'
 export class AppComponent implements OnInit {
   products: Product[];
   search_product: '';
+  mode: 'products';
+  configuration: boolean = false;
 
  constructor(private productsService: ProductsService) { }
 
