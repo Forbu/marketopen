@@ -22,7 +22,6 @@ contract openmarket_v2 {
 
   struct buyer {
         string name; // Name of the seller
-        uint8 mark; // Mark for the buyer
         address[] adress_to_mark; // adress the buyer have to mark
         string email; //
   }
@@ -115,6 +114,7 @@ contract openmarket_v2 {
           sellers[address_tonote].comments.push(comment);
           break;
           // delete on point of mark for the buyer
+          // TODO
         }
     }
   }
