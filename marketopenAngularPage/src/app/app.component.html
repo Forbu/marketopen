@@ -1,19 +1,52 @@
 <!--The content below is only a placeholder and can be replaced.-->
+<nav class="navbar navbar-default">
 <div class="container-fluid">
-  <div class="col-md-2">.col-md-1</div>
-<li *ngFor="let product of products">
-  <div class="panel panel-primary">
-  <div class="panel-heading">
-    <h3 class="panel-title">{{product.name}}</h3>
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" href="#">Marketopen</a>
   </div>
-  <div class="panel-body">
-    <h1> Description : <small>{{product.description}}</small></h1>
-    <h1> Price : <small>{{product.price}}</small></h1>
-    <h1> image URL : <small>{{product.image_adress}}</small></h1>
-    <h1> seller description : <small>{{product.Seller.description}}</small></h1>
-    <h1> seller Size : <small>{{product.Seller.Size}}</small></h1>
-  </div> seller Mark : <small>{{product.Seller.mark}}</small></h1>
+
+  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <ul class="nav navbar-nav">
+      <li><a href="#">Products</a></li>
+      <li><a href="#">Sellers</a></li>
+    </ul>
+    <form class="navbar-form navbar-left" role="search">
+      <div class="form-group">
+        <input [(ngModel)]="search_product" type="text" class="form-control" [ngModelOptions]="{standalone: true}" placeholder="Search Products">
+      </div>
+      <button type="submit" (click)="Lookat()" class="btn btn-default">Submit</button>
+    </form>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="#">Configurations</a></li>
+      <li><a href="#">Statistics</a></li>
+    </ul>
+  </div>
 </div>
-</li>
+</nav>
+
+<div class="container-fluid">
+  <div class="row">
+
+      <div *ngFor="let product of products" class="col-md-3">
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">{{product.name}}</h3>
+            </div>
+            <div class="panel-body">
+              <h5> Description : <small>{{product.description}}</small></h5>
+              <h5> Price : <small>{{product.price}}</small></h5>
+              <h5> Image URL : <small>{{product.image_adress}}</small></h5>
+              <h5> Seller description : <small>{{product.seller_info.description}}</small></h5>
+              <h5> Seller size : <small>{{product.seller_info.Size}}</small></h5>
+              <h5> Seller mark : <small>{{product.seller_info.mark}}</small></h5>
+            </div>
+        </div>
+      </div>
 </div>
 </div>

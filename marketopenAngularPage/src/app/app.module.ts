@@ -17,7 +17,8 @@ import{BuyerService} from './buyer.service'
     ProductComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    FormsModule
   ],
   providers: [ProductsService,
     SellerService,
