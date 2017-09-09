@@ -23,12 +23,16 @@
       <button type="submit" (click)="Lookat()" class="btn btn-default">Submit</button>
     </form>
     <ul class="nav navbar-nav navbar-right">
-      <li><a href="#">Configurations</a></li>
+      <li><a>Publish product</a></li>
+      <li><a>Registering Seller/Buyer</a></li>
+      <li><a (click)="configu_()">Configurations</a></li>
       <li><a href="#">Statistics</a></li>
     </ul>
   </div>
 </div>
 </nav>
+
+<configuration *ngIf="configuration"></configuration>
 <div class="container-fluid">
   <div class="row">
       <div *ngFor="let product of products" class="col-md-3">

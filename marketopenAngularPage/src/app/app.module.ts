@@ -4,7 +4,8 @@ import { FormsModule }    from '@angular/forms';
 
 // components
 import { AppComponent } from './app.component';
-import {ProductComponent} from './product.component'
+import {ProductComponent} from './product.component';
+import {ConfigComponent} from './configuration.component';
 
 //services
 import{ProductsService} from './products.service'
@@ -14,7 +15,8 @@ import{BuyerService} from './buyer.service'
 @NgModule({
   declarations: [
     AppComponent,
-    ProductComponent
+    ProductComponent,
+    ConfigComponent
   ],
   imports: [
     BrowserModule,

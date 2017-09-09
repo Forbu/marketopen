@@ -29,5 +29,8 @@ export class AppComponent implements OnInit {
     this.productService(this.search_product);
   }
 
+  configu_(): void {
+    this.configuration = !this.configuration;
+  }
 
 }
