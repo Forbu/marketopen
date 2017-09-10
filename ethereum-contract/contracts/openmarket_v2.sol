@@ -82,9 +82,10 @@ contract openmarket_v2 {
         // Adding the product for the seller
         var product_tosell = product({name: name_, description: description_,   price: price_, image_adress: image_adress_,seller: msg.sender,exist: true});
         products[id_tot] = product_tosell;
-        id_tot += 1;
+
         // broadcast product to the blockchain
         publish_product(id_tot);
+        id_tot += 1;
   }
 
   function buy_product (uint256 id_) payable {
@@ -133,13 +134,9 @@ contract openmarket_v2 {
 
 
   function getBuyer(address address__) public returns(string name,
-          uint8 mark,
-          address[] adress_to_mark,
           string email){
     // TODO
     name = buyers[address__].name;
-    mark = buyers[address__].mark;
-    adress_to_mark = buyers[address__].adress_to_mark;
     email = buyers[address__].email;
 
   }

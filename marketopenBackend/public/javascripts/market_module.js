@@ -34,7 +34,7 @@ module.exports = {
         fromBlock: blockId,
         toBlock: 'latest'
     });
-    result.then(console.log, console.error);
+    return result;
 
   },
 
@@ -493,7 +493,7 @@ module.exports = {
   ],
 
   // to change a lot
-  address_contract : "0x49ffd640738c1919d6f8a4ac17f22566d5cd74ab"
+  address_contract : "0x4aab01b1d83b9cbd1960534052c44849c66170d6"
 
 
 };

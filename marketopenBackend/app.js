@@ -11,7 +11,7 @@ var users = require('./routes/users');
 // mongodb stuff TODO later
 var http = require('http');
 var MongoClient = require('mongodb').MongoClient;
-var url = "mongodb://localhost:27017/mydb";
+var url_mongo = "mongodb://@localhost:27017/marketopen";
 
 var app = express();
 
@@ -38,11 +38,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/init',function(req, res){
   // init the database
-  MongoClient.connect(url, function(err, db) {
+  console.log("initialisation");
+  MongoClient.connect(url_mongo, function(err, db) {
+    console.log("client connected");
   if (err) throw err;
-  db.collectionNames(function(err,result){
+  db.listCollections().toArray(function(err,result){
+    console.log(result);
     for(i = 0;i< result.length;i++){
-      if(result[i] == 'products'|| result[i] == 'sellers'){
+      if(result[i]['name'] == 'products'|| result[i]['name'] == 'sellers'){
         res.send("initialisation already done");
         return null;
       }
@@ -53,7 +56,7 @@ app.get('/init',function(req, res){
       sellers.then(function(result){
         console.log(result);
         // add to the mongodb database
-        for(i=0:i<sellers.length:i++){
+        for(i=0;i<sellers.length;i++){
           // request on db
           openmarket_module.contract.methods.getSeller(result[i]['address']).call().then(
               function(result){
@@ -71,7 +74,7 @@ app.get('/init',function(req, res){
       products.then(function(result){
         console.log(result);
         // add to the mongodb database
-        for(i=0:i<products.length:i++){
+        for(i=0;i<products.length;i++){
           // request on db
           // query HERE TODO
           openmarket_module.contract.methods.getProduct(result[i]['id_']).call().then(
@@ -81,6 +84,7 @@ app.get('/init',function(req, res){
               collection.insert(result);
             });
         }
+        db.collection("products").createIndex({"name":"text","description":"text"})
         res.send("finishing inserting products");
       });
     });
@@ -89,11 +93,55 @@ app.get('/init',function(req, res){
   });
 });
 
+app.get('/init_index',function(req, res){
+
+MongoClient.connect(url_mongo, function(err, db) {
+  db.collection("products").createIndex({"name":"text","description":"text"});
+});
+  res.send("init ok");
+});
+
+app.get('/publish_product',function(req, res){
+  // clean all the data from the database
+  // clean operation on the mongodb database (remove old data)
+  var product_bis = req.param('product');
+  console.log(product_bis);
+
+  product = {"name" : "yolo",
+            "description": "best yolo ever",
+            "price" : 10,
+            "image_adress": "mydearchocolate.choco",
+            "address_from" : "0x2a11aaba99e3e647a00e8def199b27646ad1b79f",
+            "gas_": 4712388
+              }
+  product_1 = {"name" : "chocolate",
+            "description": "best chocolate ever",
+            "price" : 10,
+            "image_adress": "mydearchocolate.choco",
+            "address_from" : "0x2a11aaba99e3e647a00e8def199b27646ad1b79f",
+            "gas_": 4712388
+              }
+  product_2 = {"name" : "chocolatine",
+            "description": "best chocolate ever",
+            "price" : 10,
+            "image_adress": "mydearchocolate.choco",
+            "address_from" : "0x2a11aaba99e3e647a00e8def199b27646ad1b79f",
+            "gas_": 4712388
+              }
+
+  openmarket_module.publish_product(product["name"],product["description"],product["price"],product["image_adress"],product["address_from"],product["gas_"])
+  openmarket_module.publish_product(product_1["name"],product_1["description"],product_1["price"],product_1["image_adress"],product_1["address_from"],product_1["gas_"])
+  openmarket_module.publish_product(product_2["name"],product_2["description"],product_2["price"],product_2["image_adress"],product_2["address_from"],product_2["gas_"])
+
+  console.log("product publish");
+  res.send("product publish");
+});
+
 app.get('/cleanAll',function(req, res){
   // clean all the data from the database
   // clean operation on the mongodb database (remove old data)
   var blockId = req.param('blockid');
-  MongoClient.connect(url, function(err, db) {
+  MongoClient.connect(url_mongo, function(err, db) {
   if (err) throw err;
     db.collection('sellers',function(err, collection){
       collection.remove({},function(err, removed){
@@ -111,7 +159,7 @@ app.get('/clean',function(req, res){
   // clean all the data from the database
   // clean operation on the mongodb database (remove old data)
   var blockId = req.param('blockid');
-  MongoClient.connect(url, function(err, db) {
+  MongoClient.connect(url_mongo, function(err, db) {
     if (err) throw err;
   });
   res.send("clean partial");
@@ -124,17 +172,48 @@ app.get('/actualize',function(req, res){
 
   // get the id of the last actualization
   // then actualise from here
+
+  // see first and last block and download from the last block
+  MongoClient.connect(url_mongo, function(err, db) {
+    var blockLast = 0;
+    var blockFirst = 0;
+    console.log("about the register");
+    openmarket_module.get_productsFrom(blockLast).then(
+        function(result){
+          console.log(result);
+        // We look for the carac of the seller too
+        result.forEach(function(product, i) {
+
+          var id = product["returnValues"]["id_"];
+          // request to the id
+          console.log("id : ",id);
+
+          openmarket_module.contract.methods.getProduct(id).call().then(
+            function(result_prod){
+              console.log(i);
+              var result_all = Object.assign({},result_prod, product["returnValues"]);
+              console.log(result_all);
+              db.collection("products").insert(result_all);
+            });
+
+          // we register all the data
+        });
+
+        res.send("registering all");
+      });
+  });
+
 });
 
 // Part where we see all the sellers
-app.get('/seller',function(req, res){
+app.get('/get_seller',function(req, res){
   var address__ = req.param('address');
 
   // just call the database
-  MongoClient.connect(url, function(err, db) {
+  MongoClient.connect(url_mongo, function(err, db) {
   if (err) throw err;
   var query = { address: address__};
-  db.collection("seller").find(query).toArray(function(err, result) {
+  db.collection("sellers").find(query).toArray(function(err, result) {
     if (err) throw err;
     res.json(result);
     db.close();
@@ -147,7 +226,7 @@ app.get('/seller',function(req, res){
 app.get('/buyer',function(req, res){
   var address__ = req.param('address');
   // make the the request to see the buyer
-  MongoClient.connect(url, function(err, db) {
+  MongoClient.connect(url_mongo, function(err, db) {
   if (err) throw err;
   var query = { address: address__ };
   db.collection("buyer").find(query).toArray(function(err, result) {
@@ -160,16 +239,26 @@ app.get('/buyer',function(req, res){
 
 app.get('/products_search',function(req, res){
   // use mongodb database as search engine
-  var address = req.param('keyword');
+  var keyword = req.param('keyword');
+  // simple retrieve schema
+  MongoClient.connect(url_mongo, function(err, db) {
+    if (err) throw err;
+    var query = {$text: {$search: keyword}}
+    var opt = {score: {$meta: "textScore"}};
+
+    db.collection("products").find(query,opt).sort({score:{$meta:"textScore"}}).toArray(function(err, result) {
+      if (err) throw err;
+      res.json(result);
+      db.close();
+    });
+  });
 });
 
 app.get('/buy',function(req, res){
   // buy operation
   var price = req.param('price');
   var id_product = req.param('id_product');
-
-
-
+  // call to the web3 data
 });
 
 // catch 404 and forward to error handler
