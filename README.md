@@ -7,15 +7,21 @@ The project is currently under developpment.
 
 ### ROADMAP
 
--> Smart Contract code testing finishing 23 August 2017
-Finished : every functions is implemented (well we will see later for the optimisation)
+-> Smart Contract code finished
 
--> Backend Javascript should take 1 week => finishing ~01 september
-Implemented the backend with the web3 framework (29 August)
+-> Javasceript Express Backend : Mained functions finished.
+TODO :
+(publish function to finish (sep from test function)
+Lundi 18 Sept
 
--> Frontend should take 1/2 weeks -> 14 september
-TODO
+-> Frontend with Angular2 : main functions of display finished
+TODO : publish product + buy product
+Mardi 19 Sept
 
 Then they should be a lot of documentation coming.
 
 You can contact me to forbu14@gmail.com
+
+
+
+
