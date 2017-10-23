@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule }    from '@angular/forms';
+import {HttpClientModule} from '@angular/common/http';
 
 // components
 import { AppComponent } from './app.component';
@@ -20,7 +21,8 @@ import{BuyerService} from './buyer.service'
   ],
   imports: [
     BrowserModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   providers: [ProductsService,
     SellerService,
