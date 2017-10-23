@@ -493,7 +493,6 @@ module.exports = {
   ],
 
   // to change a lot
-  address_contract : "0x4aab01b1d83b9cbd1960534052c44849c66170d6"
-
+  address_contract : "0x344838de89821ab8719277ff790cfa0cd33c92b4"
 
 };

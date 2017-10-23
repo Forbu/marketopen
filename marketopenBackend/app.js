@@ -106,26 +106,27 @@ app.get('/publish_product',function(req, res){
   // clean operation on the mongodb database (remove old data)
   var product_bis = req.param('product');
   console.log(product_bis);
+  adress = "0xedbf6fd3e88900f5b171c8472f170c05914d8b1b"
 
   product = {"name" : "yolo",
             "description": "best yolo ever",
             "price" : 10,
             "image_adress": "mydearchocolate.choco",
-            "address_from" : "0x2a11aaba99e3e647a00e8def199b27646ad1b79f",
+            "address_from" : adress,
             "gas_": 4712388
               }
   product_1 = {"name" : "chocolate",
             "description": "best chocolate ever",
             "price" : 10,
             "image_adress": "mydearchocolate.choco",
-            "address_from" : "0x2a11aaba99e3e647a00e8def199b27646ad1b79f",
+            "address_from" : adress,
             "gas_": 4712388
               }
   product_2 = {"name" : "chocolatine",
             "description": "best chocolate ever",
             "price" : 10,
             "image_adress": "mydearchocolate.choco",
-            "address_from" : "0x2a11aaba99e3e647a00e8def199b27646ad1b79f",
+            "address_from" : adress,
             "gas_": 4712388
               }
 
