@@ -36,6 +36,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
 app.get('/init',function(req, res){
   // init the database
   console.log("initialisation");
@@ -101,12 +108,12 @@ MongoClient.connect(url_mongo, function(err, db) {
   res.send("init ok");
 });
 
-app.get('/publish_product',function(req, res){
+app.get('/publish_product_test',function(req, res){
   // clean all the data from the database
   // clean operation on the mongodb database (remove old data)
   var product_bis = req.param('product');
   console.log(product_bis);
-  adress = "0xedbf6fd3e88900f5b171c8472f170c05914d8b1b"
+  adress = "0x2341a26dc7ee0a4f5404a2429e81ba71726dde05"
 
   product = {"name" : "yolo",
             "description": "best yolo ever",
@@ -137,6 +144,19 @@ app.get('/publish_product',function(req, res){
   console.log("product publish");
   res.send("product publish");
 });
+
+app.get('/publish_product',function(req, res){
+  // clean all the data from the database
+  // clean operation on the mongodb database (remove old data)
+  var product_bis = req.param('product').json();
+  console.log(product_bis);
+
+  openmarket_module.publish_product(product["name"],product["description"],product["price"],product["image_adress"],product["address_from"],product["gas_"])
+
+  console.log("product publish");
+  res.send("product published");
+});
+
 
 app.get('/cleanAll',function(req, res){
   // clean all the data from the database
@@ -249,6 +269,7 @@ app.get('/products_search',function(req, res){
 
     db.collection("products").find(query,opt).sort({score:{$meta:"textScore"}}).toArray(function(err, result) {
       if (err) throw err;
+      console.log(result)
       res.json(result);
       db.close();
     });
